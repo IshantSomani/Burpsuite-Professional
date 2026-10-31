@@ -1,1 +1,25 @@
-java --add-opens=java.desktop/javax.swing=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED -javaagent:/home/kali/Desktop/Burpsuite-Professional/loader.jar -noverify -jar /home/kali/Desktop/Burpsuite-Professional/burpsuite_pro_v2026.jar &
+#!/bin/bash
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/loader.jar" ]; then
+    if [ -f "/usr/local/share/Burpsuite-Professional/loader.jar" ]; then
+        SCRIPT_DIR="/usr/local/share/Burpsuite-Professional"
+    elif [ -f "$HOME/Burpsuite-Professional/loader.jar" ]; then
+        SCRIPT_DIR="$HOME/Burpsuite-Professional"
+    elif [ -f "$HOME/Desktop/Burpsuite-Professional/loader.jar" ]; then
+        SCRIPT_DIR="$HOME/Desktop/Burpsuite-Professional"
+    fi
+fi
+
+JAR_FILE=$(find "$SCRIPT_DIR" -maxdepth 1 -name "burpsuite_pro_v*.jar" | head -n 1)
+if [ -z "$JAR_FILE" ]; then
+    JAR_FILE="$SCRIPT_DIR/burpsuite_pro_v2026.jar"
+fi
+
+java --add-opens=java.desktop/javax.swing=ALL-UNNAMED \
+     --add-opens=java.base/java.lang=ALL-UNNAMED \
+     --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED \
+     --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED \
+     --add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED \
+     -javaagent:"$SCRIPT_DIR/loader.jar" \
+     -noverify \
+     -jar "$JAR_FILE" "$@" &

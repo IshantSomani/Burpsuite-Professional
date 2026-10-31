@@ -17,7 +17,7 @@
 
 #  $${\color{magenta}Linux-Installation}$$
 ```sh
-sudo apt update && sudo apt install -y wget && wget -qO- https://raw.githubusercontent.com/xiv3r/Burpsuite-Professional/main/install.sh | sudo bash
+sudo apt update && sudo apt install -y wget && wget -qO- https://raw.githubusercontent.com/IshantSomani/Burpsuite-Professional/main/install.sh | sudo bash
 ```
 ## Run
 ```sh
@@ -28,7 +28,7 @@ burpsuitepro
 ## Update
 > optional
 ```
-cd && sudo rm -rf Burpsuite-Professional && wget -qO- https://raw.githubusercontent.com/xiv3r/Burpsuite-Professional/refs/heads/main/update.sh | sudo bash
+cd && sudo rm -rf Burpsuite-Professional && wget -qO- https://raw.githubusercontent.com/IshantSomani/Burpsuite-Professional/refs/heads/main/update.sh | sudo bash
 ```
  
 ## Java Version
@@ -42,7 +42,7 @@ sudo update-alternatives --config java
 
 <div align="center">
  
-https://github.com/xiv3r/Burpsuite-Professional/assets/117867334/c25831a4-68a2-44ee-b6dd-5ff18165f340
+https://github.com/IshantSomani/Burpsuite-Professional/assets/117867334/c25831a4-68a2-44ee-b6dd-5ff18165f340
 </div>
  
 Note: Copy the license from loader to the burpsuite > manual activation > copy burpsuite request key to loader request >  copy response key to the burpsuite.
@@ -53,7 +53,7 @@ Note: Copy the license from loader to the burpsuite > manual activation > copy b
 right click the desktop -> create a launcher name it Burpsuite Professional, add command `burpsuitepro` and select burpsuite community icon.
 
 <div align="center">
- <img width="500" height="500" src="https://github.com/xiv3r/Burpsuite-Professional/blob/main/Launcher.jpg">
+ <img width="500" height="500" src="https://github.com/IshantSomani/Burpsuite-Professional/blob/main/Launcher.jpg">
 </div>
 
 <br>
@@ -71,7 +71,7 @@ right click the desktop -> create a launcher name it Burpsuite Professional, add
   inputs = {
     burpsuitepro = {
       type = "github";
-      owner = "xiv3r";
+      owner = "IshantSomani";
       repo = "Burpsuite-Professional";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -112,7 +112,7 @@ NOTE: `loader.jar` is symlinked to `burpsuite.jar` so burpsuite recognizes the l
  
 - Make a `Burp` directory name in `C Drive` for faster access.
 
-- Download [install.ps1](https://codeload.github.com/xiv3r/Burpsuite-Professional/zip/refs/heads/main) and extract move the file inside to `C:\Burp`
+- Download [install.ps1](https://codeload.github.com/IshantSomani/Burpsuite-Professional/zip/refs/heads/main) and extract move the file inside to `C:\Burp`
 
 - Open `Powershell` as administrator and execute below command to set Script Execution Policy.
 
@@ -159,7 +159,7 @@ brew install git openjdk@17
 Clone the Burp Suite Professional repository, download the Burp Suite JAR file, and execute the key generator and Burp Suite.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/xiv3r/Burpsuite-Professional/main/install_macos.sh | bash
+curl -fsSL https://raw.githubusercontent.com/IshantSomani/Burpsuite-Professional/main/install_macos.sh | bash
 ```
 
 ## Step 3: Install the `burp` Shortcut
@@ -181,8 +181,8 @@ sudo cp burp /usr/local/bin/burp
 
 ## Contributors 
 
-<a href="https://github.com/xiv3r/Burpsuite-Professional/graphs/contributors">
-  <img src="https://contrib.rocks/image?&columns=25&max=10000&&repo=xiv3r/Burpsuite-Professional" alt="contributors"/>
+<a href="https://github.com/IshantSomani/Burpsuite-Professional/graphs/contributors">
+  <img src="https://contrib.rocks/image?&columns=25&max=10000&&repo=IshantSomani/Burpsuite-Professional" alt="contributors"/>
 </a>
 
 ## Credits

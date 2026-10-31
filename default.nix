@@ -100,7 +100,7 @@ in
         initial mapping and analysis of an application's attack surface, through to finding and
         exploiting security vulnerabilities.
       '';
-      homepage = "https://github.com/sammhansen/Burpsuite-Professional.git";
+      homepage = "https://github.com/IshantSomani/Burpsuite-Professional.git";
       changelog =
         "https://portswigger.net/burp/releases/professional-community-"
         + replaceStrings ["."] ["-"] version;

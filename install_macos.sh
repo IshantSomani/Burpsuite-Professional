@@ -1,10 +1,16 @@
-git clone https://github.com/xiv3r/Burpsuite-Professional.git 
-cd Burpsuite-Professional
-
+#!/bin/bash
+if [ ! -f "loader.jar" ]; then
+    if [ ! -d "Burpsuite-Professional" ]; then
+        git clone https://github.com/IshantSomani/Burpsuite-Professional.git
+        cd Burpsuite-Professional || exit 1
+    else
+        cd Burpsuite-Professional || exit 1
+    fi
+fi
 
 # Download Burpsuite Professional
 echo "Downloading Burp Suite Professional Latest..."
-version=2025
+version=2026
 url="https://portswigger.net/burp/releases/download?product=pro&type=Jar"
 curl -L "$url" -o "burpsuite_pro_v$version.jar"
 
@@ -21,7 +27,6 @@ java --add-opens=java.desktop/javax.swing=ALL-UNNAMED \
      -noverify \
      -jar burpsuite_pro_v$version.jar &
 
-
 echo "Creating burpsuitepro shortcut..."
 cat << 'EOF' > burp
 #!/bin/bash
@@ -33,7 +38,7 @@ java --add-opens=java.desktop/javax.swing=ALL-UNNAMED \
      --add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED \
      -javaagent:$(pwd)/loader.jar \
      -noverify \
-     -jar $(pwd)/burpsuite_pro_v$version.jar &
+     -jar $(pwd)/burpsuite_pro_v2026.jar "$@" &
 EOF
 
 #app bundle

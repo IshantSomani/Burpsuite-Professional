@@ -30,7 +30,7 @@ if (!($jre8)){
 
 # Download Burpsuite Professional
 Write-Host "Downloading Burp Suite Professional Latest..."
-$version = "2025"
+$version = "2026"
 # Invoke-WebRequest -Uri "https://portswigger.net/burp/releases/download?product=pro&version=$version&type=Jar" `
 #   -OutFile "burpsuite_pro_v$version.jar"
 Invoke-WebRequest -Uri "https://portswigger.net/burp/releases/download?product=pro&type=Jar" `
@@ -38,7 +38,7 @@ Invoke-WebRequest -Uri "https://portswigger.net/burp/releases/download?product=p
 
 # Creating Burp.bat file with command for execution
 if (Test-Path burp.bat) {rm burp.bat}
-$path = "java --add-opens=java.desktop/javax.swing=ALL-UNNAMED--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED -javaagent:`"$pwd\loader.jar`" -noverify -jar `"$pwd\burpsuite_pro_v$version.jar`""
+$path = "java --add-opens=java.desktop/javax.swing=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED --add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED -javaagent:`"$pwd\loader.jar`" -noverify -jar `"$pwd\burpsuite_pro_v$version.jar`""
 $path | add-content -path Burp.bat
 echo "`nBurp.bat file is created"
 
@@ -54,7 +54,7 @@ echo "`nBurp-Suite-Pro.vbs file is created."
 # Download loader if it not exists
 if (!(Test-Path loader.jar)){
     echo "`nDownloading Loader ...."
-    Invoke-WebRequest -Uri "https://github.com/xiv3r/Burpsuite-Professional/raw/refs/heads/main/loader.jar" -OutFile loader.jar
+    Invoke-WebRequest -Uri "https://github.com/IshantSomani/Burpsuite-Professional/raw/refs/heads/main/loader.jar" -OutFile loader.jar
     echo "`nLoader is Downloaded"
 }else{
     echo "`nLoader is already Downloaded"
