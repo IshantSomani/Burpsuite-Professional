@@ -5,6 +5,27 @@ echo "Installing Dependencies..."
 sudo apt update
 sudo apt install -y git wget openjdk-21-jre
 
+# Detect Java 21 / 17 (Java 22+ like Java 25 breaks loader.jar bytecode patching)
+JAVA_BIN=""
+for candidate in \
+    "/usr/lib/jvm/java-21-openjdk-amd64/bin/java" \
+    "/usr/lib/jvm/java-21-openjdk-arm64/bin/java" \
+    "/usr/lib/jvm/java-21-openjdk/bin/java" \
+    "/usr/lib/jvm/java-17-openjdk-amd64/bin/java" \
+    "/usr/lib/jvm/java-17-openjdk-arm64/bin/java" \
+    "/usr/lib/jvm/java-17-openjdk/bin/java"; do
+    if [ -x "$candidate" ]; then
+        JAVA_BIN="$candidate"
+        break
+    fi
+done
+
+if [ -z "$JAVA_BIN" ]; then
+    JAVA_BIN="$(which java)"
+fi
+
+echo "Using Java runtime: $JAVA_BIN"
+
 # Cloning if not already in project folder
 if [ ! -f "loader.jar" ]; then
     if [ ! -d "Burpsuite-Professional" ]; then
@@ -40,12 +61,12 @@ if [ -n "$SUDO_USER" ] && [ "$SUDO_USER" != "root" ]; then
 fi
 chmod -R 755 "$INSTALL_DIR"
 
-# Execute Key Generator
+# Execute Key Generator using Java 21
 echo "Starting Key loader.jar..."
 if [ -n "$SUDO_USER" ] && [ "$SUDO_USER" != "root" ]; then
-    sudo -u "$SUDO_USER" java -jar "$INSTALL_DIR/loader.jar" &
+    sudo -u "$SUDO_USER" "$JAVA_BIN" -jar "$INSTALL_DIR/loader.jar" &
 else
-    (java -jar "$INSTALL_DIR/loader.jar") &
+    ("$JAVA_BIN" -jar "$INSTALL_DIR/loader.jar") &
 fi
 
 # Execute Burpsuite Professional Wrapper
@@ -62,14 +83,33 @@ if [ -z "$JAR_FILE" ]; then
     JAR_FILE="$SCRIPT_DIR/burpsuite_pro_v2026.jar"
 fi
 
-java --add-opens=java.desktop/javax.swing=ALL-UNNAMED \
-     --add-opens=java.base/java.lang=ALL-UNNAMED \
-     --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED \
-     --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED \
-     --add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED \
-     -javaagent:"$SCRIPT_DIR/loader.jar" \
-     -noverify \
-     -jar "$JAR_FILE" "$@" &
+# Detect Java 21 / 17 (Java 22+ like Java 25 breaks loader.jar bytecode patching)
+JAVA_BIN=""
+for candidate in \
+    "/usr/lib/jvm/java-21-openjdk-amd64/bin/java" \
+    "/usr/lib/jvm/java-21-openjdk-arm64/bin/java" \
+    "/usr/lib/jvm/java-21-openjdk/bin/java" \
+    "/usr/lib/jvm/java-17-openjdk-amd64/bin/java" \
+    "/usr/lib/jvm/java-17-openjdk-arm64/bin/java" \
+    "/usr/lib/jvm/java-17-openjdk/bin/java"; do
+    if [ -x "$candidate" ]; then
+        JAVA_BIN="$candidate"
+        break
+    fi
+done
+
+if [ -z "$JAVA_BIN" ]; then
+    JAVA_BIN="$(which java)"
+fi
+
+"$JAVA_BIN" --add-opens=java.desktop/javax.swing=ALL-UNNAMED \
+            --add-opens=java.base/java.lang=ALL-UNNAMED \
+            --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED \
+            --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED \
+            --add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED \
+            -javaagent:"$SCRIPT_DIR/loader.jar" \
+            -noverify \
+            -jar "$JAR_FILE" "$@" &
 EOF
 
 sed -i "s|INSTALL_DIR_PLACEHOLDER|$INSTALL_DIR|g" burpsuitepro
