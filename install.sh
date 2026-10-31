@@ -135,5 +135,22 @@ Categories=03-webapp-analysis;03-01-web-application-proxies;Development;Security
 StartupWMClass=burp-StartBurp
 EOF
 
-echo "Installation complete! Starting Burp Suite Professional..."
-(./burpsuitepro)
+echo "Installation complete!"
+
+# Ensure ~/.java and ~/.BurpSuite belong to the real user so license saves permanently
+if [ -n "$SUDO_USER" ] && [ "$SUDO_USER" != "root" ]; then
+    mkdir -p "/home/$SUDO_USER/.java" "/home/$SUDO_USER/.BurpSuite"
+    chown -R "$SUDO_USER:$SUDO_USER" "/home/$SUDO_USER/.java" "/home/$SUDO_USER/.BurpSuite" 2>/dev/null || true
+
+    # If root has any existing activated license, sync it to user
+    if [ -d "/root/.java" ]; then
+        cp -rn /root/.java/* "/home/$SUDO_USER/.java/" 2>/dev/null || true
+        chown -R "$SUDO_USER:$SUDO_USER" "/home/$SUDO_USER/.java" 2>/dev/null || true
+    fi
+
+    echo "Starting Burp Suite Professional as $SUDO_USER..."
+    sudo -u "$SUDO_USER" ./burpsuitepro &
+else
+    echo "Starting Burp Suite Professional..."
+    (./burpsuitepro) &
+fi
