@@ -26,6 +26,10 @@ done
 
 if [ -z "$JAVA_BIN" ]; then
     JAVA_BIN="$(which java)"
+else
+    # Automatically switch system-wide java to Java 21/17 so all tools & loader use it
+    echo "Setting default system Java to: $JAVA_BIN"
+    sudo update-alternatives --set java "$JAVA_BIN" 2>/dev/null || update-alternatives --set java "$JAVA_BIN" 2>/dev/null || true
 fi
 
 echo "Using Java runtime: $JAVA_BIN"

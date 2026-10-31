@@ -15,42 +15,93 @@
 <br>
 <br>
 
-#  $${\color{magenta}Linux-Installation}$$
+# $${\color{magenta}Linux-Installation}$$
+
+### Option 1: One-Liner Quick Install (Recommended)
 ```sh
-sudo apt update && sudo apt install -y wget && wget -qO- https://raw.githubusercontent.com/IshantSomani/Burpsuite-Professional/main/install.sh | sudo bash
+sudo apt update && sudo apt install -y wget git && wget -qO- https://raw.githubusercontent.com/IshantSomani/Burpsuite-Professional/main/install.sh | sudo bash
 ```
+
+### Option 2: Manual Clone & Install
+```sh
+sudo apt update && sudo apt install -y git wget openjdk-21-jre
+git clone https://github.com/IshantSomani/Burpsuite-Professional.git
+cd Burpsuite-Professional
+chmod +x install.sh
+sudo ./install.sh
+```
+
 ## Run
+From terminal:
 ```sh
 burpsuitepro
 ```
-<details><summary></summary>
+Or find **Burp Suite Professional** in your Kali Application Menu under **03 - Web Application Analysis** -> **Web Application Proxies**.
 
-## Update
-> optional
-```
-cd && sudo rm -rf Burpsuite-Professional && wget -qO- https://raw.githubusercontent.com/IshantSomani/Burpsuite-Professional/refs/heads/main/update.sh | sudo bash
-```
- 
-## Java Version
-> select the default openjdk runtime
-```
+---
+
+## ☕ Java Version Requirement (OpenJDK 21)
+
+> [!IMPORTANT]
+> BurpLoaderKeygen (`loader.jar`) requires **OpenJDK 21** or **OpenJDK 17**.
+> Bleeding-edge Kali rolling versions (e.g. Java 22, 23, 24, 25) break bytecode agent patching, causing license rejection.
+> 
+> The `install.sh` and `update.sh` scripts automatically detect and switch system-wide Java to OpenJDK 21 for you. If you ever need to manually switch your system Java runtime to Java 21, run:
+
+```sh
+# Set Java 21 non-interactively (AMD64 / x86_64):
+sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java
+
+# Or on ARM machines:
+sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-arm64/bin/java
+
+# Or choose interactively:
 sudo update-alternatives --config java
-```               
-</details>
+```
+
+---
 
 ## Setup Licenses
+
+Follow these exact steps when activating:
+
+1. **In `loader.jar`**:
+   - Type your name into **License to:** (e.g. `IshantSomani`).
+   - Copy the entire string from the **License** box (`Ctrl + A`, `Ctrl + C`).
+2. **In Burp Suite Pro**:
+   - Paste the copied license string into the box and click **Next**.
+   - Because the offline keygen cannot verify with PortSwigger online, Burp will prompt you for manual activation.
+   - Click the **Manual activation** button (bottom right).
+3. **Exchange Keys**:
+   - In Burp, click **Copy Request**.
+   - In `loader.jar`, paste the copied request into the **Activation Request** box.
+   - In `loader.jar`, the **Activation Response** is automatically generated. Click **Copy** next to it.
+   - In Burp, click **Paste Response**.
+4. **Finish**:
+   - Click **Next** -> Click **Finish**. Burp Suite Professional is now fully activated!
 
 <div align="center">
  
 https://github.com/IshantSomani/Burpsuite-Professional/assets/117867334/c25831a4-68a2-44ee-b6dd-5ff18165f340
 </div>
- 
-Note: Copy the license from loader to the burpsuite > manual activation > copy burpsuite request key to loader request >  copy response key to the burpsuite.
+
+<br>
+
+<details><summary><b>🔄 Update Burp Suite Pro</b></summary>
+
+```sh
+cd && sudo rm -rf Burpsuite-Professional && wget -qO- https://raw.githubusercontent.com/IshantSomani/Burpsuite-Professional/refs/heads/main/update.sh | sudo bash
+```
+Or from an existing clone:
+```sh
+cd ~/Burpsuite-Professional && git pull && sudo ./update.sh
+```
+</details>
 
 <br>
 
 ## Shortcut Launcher - (xfce)
-right click the desktop -> create a launcher name it Burpsuite Professional, add command `burpsuitepro` and select burpsuite community icon.
+Right-click Desktop -> Create Launcher -> Name: `Burp Suite Professional`, Command: `burpsuitepro`, Icon: Select Burp Suite icon.
 
 <div align="center">
  <img width="500" height="500" src="https://github.com/IshantSomani/Burpsuite-Professional/blob/main/Launcher.jpg">
@@ -61,7 +112,7 @@ right click the desktop -> create a launcher name it Burpsuite Professional, add
 
 ---------
 
-#  $${\color{magenta}NixOS-Installation}$$
+# $${\color{magenta}NixOS-Installation}$$
 
 ## Add this repo's flake to your flake inputs
 ```
